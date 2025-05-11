@@ -151,9 +151,8 @@
 			<script> const clock = document.getElementById('clock'); const updateClock = () => { const date = new Date(); const hours = date.getHours(); const minutes = date.getMinutes(); const seconds = date.getSeconds(); clock.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`; }; setInterval(updateClock, 1000); </script>
 			</h1></b>
 			<P>
-			<pre>
-			<code>
-			<html>текст</html> - корневой элемент HTML-документа
+
+			<xmp>><html>текст</html> - корневой элемент HTML-документа</xmp>
 				
 			<head>текст</head> - секция метаинформации
 				
@@ -178,9 +177,8 @@
 			<table>текст</table> - таблица
 				
 			<form>текст</form> - форма
-				
-			</code>
-			</pre>	
+
+			
 			</P>
 				<style>
 					:root {
