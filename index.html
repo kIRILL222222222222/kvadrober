@@ -1,285 +1,522 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Сайт с вкладками и необычным дизайном</title>
-	<style>
-		/* Общие стили */
-		body {
-			font-family: 'Arial', sans-serif;
-			margin: 0;
-			padding: 0;
-			background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
-			background-size: 400% 400%;
-			animation: gradientBG 15s ease infinite;
-			color: #333;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-		}
-
-		@keyframes gradientBG {
-			0% {
-				background-position: 0% 50%;
-			}
-
-			50% {
-				background-position: 100% 50%;
-			}
-
-			100% {
-				background-position: 0% 50%;
-			}
-		}
-
-		/* Контейнер для вкладок */
-		.tab-container {
-			width: 90%;
-			max-width: 800px;
-			background: rgba(255, 255, 255, 0.8);
-			border-radius: 20px;
-			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-			overflow: hidden;
-			backdrop-filter: blur(10px);
-		}
-
-		/* Кнопки вкладок */
-		.tab-buttons {
-			display: flex;
-			background: rgba(255, 255, 255, 0.9);
-			border-bottom: 2px solid #ff6f61;
-		}
-
-		.tab-button {
-			flex: 1;
-			padding: 15px;
-			text-align: center;
-			color: #333;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			position: relative;
-			overflow: hidden;
-		}
-
-		.tab-button::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, rgba(255, 111, 97, 0.3), rgba(255, 111, 97, 0.1));
-			transition: all 0.3s ease;
-			z-index: 0;
-		}
-
-		.tab-button:hover::before {
-			left: 0;
-		}
-
-		.tab-button.active {
-			background: #ff6f61;
-			color: #fff;
-			font-weight: bold;
-		}
-
-		/* Контент вкладок */
-		.tab-content {
-			padding: 20px;
-			display: none;
-			animation: fadeIn 0.5s ease;
-		}
-
-		.tab-content.active {
-			display: block;
-		}
-
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-				transform: translateY(10px);
-			}
-
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		h2 {
-			margin-top: 0;
-			font-size: 24px;
-			color: #ff6f61;
-		}
-
-		p {
-			line-height: 1.6;
-			font-size: 16px;
-		}
-
-		a {
-			color: #ff6f61;
-			text-decoration: none;
-			font-weight: bold;
-		}
-
-		a:hover {
-			text-decoration: underline;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Academy - Изучаем HTML красиво</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Навигация */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Основное содержимое */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(247, 37, 133, 0.1));
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(247, 37, 133, 0.4);
+        }
+        
+        /* Блоки с тегами */
+        .tag-section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+        
+        .tag-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .tag-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tag-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .tag-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .tag-type {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tag-description {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .code-example {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+        
+        .result-preview {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .try-it {
+            margin-top: 1.5rem;
+        }
+        
+        .try-it h4 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .try-it textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0.5rem;
+            resize: vertical;
+        }
+        
+        .try-it button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .try-it button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .output-frame {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: white;
+            margin-top: 0.5rem;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tag-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .tag-type {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-	<div class="tab-container">
-		<!-- Кнопки вкладок -->
-		<div class="tab-buttons">
-			<div class="tab-button active" data-tab="tab1">Парные и НЕпарные теги</div>
-			<div class="tab-button" data-tab="tab2">Теги для форматирование текста</div>
-			<div class="tab-button" data-tab="tab3">Атрибуты</div>
-		</div>
-
-		<!-- Контент вкладок -->
-		<div class="tab-content active" id="tab1">
-			<h2>Парные теги (контейнеры)</h2>
-			<p>Парные теги состоят из открывающего и закрывающего тегов, между которыми помещается содержимое.</p>
-			<h1><b><div id="clock" align="center"></div>
-			Примеры популярных парных тегов:
-			<script> const clock = document.getElementById('clock'); const updateClock = () => { const date = new Date(); const hours = date.getHours(); const minutes = date.getMinutes(); const seconds = date.getSeconds(); clock.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`; }; setInterval(updateClock, 1000); </script>
-			</h1></b>
-			<P>
-
-			<xmp><html>текст</html> - корневой элемент HTML-документа</xmp>
-				
-			<xmp><head>текст</head> - секция метаинформации</xmp>
-				
-			<xmp><body>текст</body> - основное содержимое страницы</xmp>
-				
-			<xmp><div>текст</div> - блочный контейнер</xmp>
-			
-			<xmp><p>текст</p> - абзац текста</xmp>
-			
-			<xmp><a>текст</a> - гиперссылка</xmp>
-				
-			<xmp><ul>текст</ul> - маркированный список</xmp>
-				
-			<xmp><ol>текст</ol> - нумерованный список</xmp>
-				
-			<xmp><li>текст</li> - элемент списка</xmp>
-				
-			<xmp><h1>текст</h1> ... <h6></h6> - заголовки</xmp>
-				
-			<xmp><span>текст</span> - строчный контейнер</xmp>
-				
-			<xmp><table>текст</table> - таблица</xmp>
-				
-			<xmp><form>текст</form> - форма</xmp>
-
-			
-			</P>
-				<style>
-					:root {
-						--bg-color: white;
-						--text-color: black;
-					}
-			
-					body.dark-theme {
-						--bg-color: black;
-						--text-color: white;
-					}
-			
-					body {
-						background-color: var(--bg-color);
-						color: var(--text-color);
-					}
-				</style>
-			
-				<script>
-					const themeSwitcher = document.getElementById('theme-switcher'); themeSwitcher.addEventListener('change', function() { document.body.classList.toggle('dark-theme', this.value === 'dark'); }); 
-				</script>			
-				<style>
-					nav ul {
-						list-style-type: none;
-						padding: 0;
-						display: none;
-					}
-			
-					nav input[type="checkbox"] {
-						display: none;
-					}
-			
-					nav label.hamburger {
-						display: inline-block;
-						cursor: pointer;
-					}
-			
-					nav label.hamburger span {
-						display: block;
-						width: 25px;
-						height: 3px;
-						background-color: #000;
-						margin: 5px 0;
-						transition: all 0.3s ease;
-					}
-			
-					nav input[type="checkbox"]:checked~ul {
-						display: block;
-					}
-			
-					nav input[type="checkbox"]:checked+label.hamburger span:nth-child(1) {
-						transform: rotate(45deg) translate(7px, 7px);
-					}
-			
-					nav input[type="checkbox"]:checked+label.hamburger span:nth-child(2) {
-						opacity: 0;
-					}
-			
-					nav input[type="checkbox"]:checked+label.hamburger span:nth-child(3) {
-						transform: rotate(-45deg) translate(6px, -6px);
-					}
-				</style>
-						</TD>
-						</FORM>
-				</div></p>
-		</div>
-
-		<div class="tab-content" id="tab2">
-			<h2>форматирование текста</h2>
-			<h1><b><div id="clock" align="center"></div>
-			HTML предоставляет множество тегов для изменения вида текста. Вот основные из них:</p>
-			</h1></b>
-		</div>
-
-		<div class="tab-content" id="tab3">
-			<h2>Атрибуты</h2>
-			<p></p>
-    	<p></p>
-			<p>По любым вопросам писать в телеграмм: <a href=>@Ded_Bunkere</a>.</p>
-		</div>
-	</div>
-
-	<script>
-		// JavaScript для переключения вкладок
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Убираем активный класс у всех кнопок и контента
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            // Добавляем активный класс к выбранной кнопке и соответствующему контенту
-            button.classList.add('active');
-            const tabId = button.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
+    <header>
+        <nav>
+            <a href="#" class="logo">HTML<span>Academy</span></a>
+            <ul class="nav-links">
+                <li><a href="#basic-tags">Основные теги</a></li>
+                <li><a href="#text-formatting">Форматирование</a></li>
+                <li><a href="#structural-tags">Структура</a></li>
+                <li><a href="#interactive-tags">Интерактив</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h1>Изучаем HTML красиво</h1>
+            <p>Интерактивный справочник по HTML с примерами кода и возможностью экспериментировать прямо в браузере</p>
+            <a href="#basic-tags" class="btn">Начать обучение</a>
+        </section>
+        
+        <section id="basic-tags" class="tag-section">
+            <h2 class="section-title">Основные теги HTML</h2>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;html&gt;</h3>
+                    <span class="tag-type">Парный тег</span>
+                </div>
+                <p class="tag-description">Корневой элемент HTML-документа. Содержит весь контент страницы.</p>
+                
+                <div class="code-example">
+                    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Моя страница&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Привет, мир!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                </div>
+                
+                <div class="result-preview">
+                    <p>Привет, мир!</p>
+                </div>
+                
+                <div class="try-it">
+                    <h4>Попробуйте сами:</h4>
+                    <textarea placeholder="Введите HTML-код здесь...">&lt;p&gt;Редактируйте этот текст&lt;/p&gt;</textarea>
+                    <button onclick="runCode(this)">Запустить код</button>
+                    <div class="output-frame"></div>
+                </div>
+            </div>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;head&gt;</h3>
+                    <span class="tag-type">Парный тег</span>
+                </div>
+                <p class="tag-description">Содержит метаинформацию о документе: заголовок, ссылки на стили, скрипты и др.</p>
+                
+                <div class="code-example">
+                    <pre>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Моя страница&lt;/title&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="text-formatting" class="tag-section">
+            <h2 class="section-title">Форматирование текста</h2>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;h1&gt;-&lt;h6&gt;</h3>
+                    <span class="tag-type">Парные теги</span>
+                </div>
+                <p class="tag-description">Заголовки разного уровня важности. &lt;h1&gt; - самый важный, &lt;h6&gt; - наименее важный.</p>
+                
+                <div class="code-example">
+                    <pre>&lt;h1&gt;Главный заголовок&lt;/h1&gt;
+&lt;h2&gt;Подзаголовок&lt;/h2&gt;
+&lt;h3&gt;Менее важный заголовок&lt;/h3&gt;</pre>
+                </div>
+                
+                <div class="result-preview">
+                    <h1 style="margin: 0.5rem 0;">Главный заголовок</h1>
+                    <h2 style="margin: 0.5rem 0;">Подзаголовок</h2>
+                    <h3 style="margin: 0.5rem 0;">Менее важный заголовок</h3>
+                </div>
+            </div>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;p&gt;</h3>
+                    <span class="tag-type">Парный тег</span>
+                </div>
+                <p class="tag-description">Определяет абзац текста. Браузер автоматически добавляет отступы перед и после абзаца.</p>
+                
+                <div class="code-example">
+                    <pre>&lt;p&gt;Это первый абзац.&lt;/p&gt;
+&lt;p&gt;Это второй абзац с &lt;strong&gt;важным&lt;/strong&gt; текстом.&lt;/p&gt;</pre>
+                </div>
+                
+                <div class="result-preview">
+                    <p>Это первый абзац.</p>
+                    <p>Это второй абзац с <strong>важным</strong> текстом.</p>
+                </div>
+            </div>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;strong&gt; и &lt;em&gt;</h3>
+                    <span class="tag-type">Парные теги</span>
+                </div>
+                <p class="tag-description">&lt;strong&gt; выделяет важный текст (жирный), &lt;em&gt; выделяет текст с акцентом (курсив).</p>
+                
+                <div class="code-example">
+                    <pre>&lt;p&gt;
+  Это &lt;strong&gt;важный&lt;/strong&gt; текст и это &lt;em&gt;текст с акцентом&lt;/em&gt;.
+&lt;/p&gt;</pre>
+                </div>
+                
+                <div class="result-preview">
+                    <p>Это <strong>важный</strong> текст и это <em>текст с акцентом</em>.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="structural-tags" class="tag-section">
+            <h2 class="section-title">Структурные теги</h2>
+            
+            <div class="tag-card">
+                <div class="tag-header">
+                    <h3 class="tag-name">&lt;div&gt; и &lt;span&gt;</h3>
+                    <span class="tag-type">Парные теги</span>
+                </div>
+                <p class="tag-description">&lt;div&gt; - блочный контейнер, &lt;span&gt; - строчный контейнер. Используются для группировки элементов.</p>
+                
+                <div class="code-example">
+                    <pre>&lt;div style="background: #f0f0f0; padding: 1rem;"&gt;
+  &lt;p&gt;Это абзац внутри &lt;span style="color: red;"&gt;div&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;</pre>
+                </div>
+                
+                <div class="result-preview">
+                    <div style="background: #f0f0f0; padding: 1rem;">
+                        <p>Это абзац внутри <span style="color: red;">div</span>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <h3>HTML Academy</h3>
+            <ul class="footer-links">
+                <li><a href="#">Главная</a></li>
+                <li><a href="#basic-tags">Уроки</a></li>
+                <li><a href="#">О проекте</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+            <p class="copyright">© 2023 HTML Academy. Все права защищены.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function runCode(button) {
+            const textarea = button.previousElementSibling;
+            const output = button.nextElementSibling;
+            
+            try {
+                output.innerHTML = textarea.value;
+            } catch (e) {
+                output.innerHTML = "Ошибка: " + e.message;
+            }
+        }
+        
+        // Добавляем возможность запускать код по Ctrl+Enter
+        document.querySelectorAll('.try-it textarea').forEach(textarea => {
+            textarea.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    const button = this.nextElementSibling;
+                    button.click();
+                }
+            });
         });
-    });
-	</script>
-
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
