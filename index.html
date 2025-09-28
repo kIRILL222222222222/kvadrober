@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Погодный прогноз</title>
+    <title>Погода в Усть-Илимске, Братске и Иркутске</title>
     <style>
-        /* Общие стили */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +13,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #1a2a6c, #2d5b8c, #4a8cb5);
             color: white;
             min-height: 100vh;
             padding: 20px;
@@ -42,12 +41,12 @@
             opacity: 0.9;
         }
         
-        /* Стили для окон */
         .windows-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            margin-bottom: 30px;
         }
         
         .window {
@@ -73,34 +72,47 @@
             padding-bottom: 10px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
         
-        .window-title i {
+        .city-name {
+            display: flex;
+            align-items: center;
+        }
+        
+        .city-name i {
             margin-right: 10px;
             font-size: 1.8rem;
         }
         
-        /* Стили для текущей погоды */
+        .weather-widget {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
         .current-weather {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            margin-bottom: 20px;
         }
         
         .weather-icon {
-            font-size: 5rem;
+            font-size: 4rem;
             margin: 15px 0;
         }
         
         .temperature {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: bold;
             margin: 10px 0;
         }
         
         .weather-description {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 15px;
         }
         
@@ -108,7 +120,7 @@
             display: flex;
             justify-content: space-around;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         
         .detail {
@@ -116,7 +128,7 @@
         }
         
         .detail-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
         }
         
@@ -125,11 +137,11 @@
             opacity: 0.8;
         }
         
-        /* Стили для прогноза */
         .forecast-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-top: 20px;
         }
         
         .forecast-item {
@@ -146,7 +158,7 @@
         }
         
         .forecast-icon {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             width: 50px;
             text-align: center;
         }
@@ -157,43 +169,37 @@
             text-align: right;
         }
         
-        /* Стили для местоположения */
-        .location-info {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .image-upload {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
         
-        .location-image {
+        .upload-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .city-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             border-radius: 10px;
             object-fit: cover;
-            margin-bottom: 15px;
+            margin-top: 15px;
+            display: none;
         }
         
-        .location-details {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .location-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .location-label {
-            opacity: 0.8;
-        }
-        
-        .location-value {
-            font-weight: bold;
-        }
-        
-        /* Адаптивность */
         @media (max-width: 768px) {
             .windows-container {
                 flex-direction: column;
@@ -205,26 +211,13 @@
             }
         }
         
-        /* Инструкции */
-        .instructions {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+        footer {
+            text-align: center;
             padding: 20px;
             margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .instructions h3 {
-            margin-bottom: 10px;
-        }
-        
-        .instructions ul {
-            padding-left: 20px;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
+            opacity: 0.8;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -232,123 +225,217 @@
 <body>
     <div class="container">
         <header>
-            <h1>Погодный прогноз</h1>
-            <p class="subtitle">Актуальная информация о погоде в вашем регионе</p>
+            <h1>Погода в городах Иркутской области</h1>
+            <p class="subtitle">Актуальная информация о погоде в Усть-Илимске, Братске и Иркутске</p>
         </header>
         
         <div class="windows-container">
-            <!-- Окно 1: Текущая погода -->
+            <!-- Окно 1: Усть-Илимск -->
             <div class="window">
-                <h2 class="window-title"><i class="fas fa-sun"></i> Текущая погода</h2>
-                <div class="current-weather">
-                    <div class="weather-icon">
-                        <i class="fas fa-sun"></i>
-                    </div>
-                    <div class="temperature">24°C</div>
-                    <div class="weather-description">Солнечно</div>
-                    <div class="weather-details">
-                        <div class="detail">
-                            <div class="detail-value">65%</div>
-                            <div class="detail-label">Влажность</div>
+                <h2 class="window-title">
+                    <span class="city-name"><i class="fas fa-city"></i> Усть-Илимск</span>
+                </h2>
+                <div class="weather-widget">
+                    <div id="ust-ilimsk-weather">
+                        <div class="current-weather">
+                            <div class="weather-icon">
+                                <i class="fas fa-snowflake"></i>
+                            </div>
+                            <div class="temperature">-15°C</div>
+                            <div class="weather-description">Снег</div>
+                            <div class="weather-details">
+                                <div class="detail">
+                                    <div class="detail-value">78%</div>
+                                    <div class="detail-label">Влажность</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">12 км/ч</div>
+                                    <div class="detail-label">Ветер</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">745 мм</div>
+                                    <div class="detail-label">Давление</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="detail">
-                            <div class="detail-value">15 км/ч</div>
-                            <div class="detail-label">Ветер</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-value">1015 гПа</div>
-                            <div class="detail-label">Давление</div>
+                        
+                        <div class="forecast-container">
+                            <div class="forecast-item">
+                                <div class="forecast-day">Завтра</div>
+                                <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="forecast-temp">-12° / -18°</div>
+                            </div>
+                            <div class="forecast-item">
+                                <div class="forecast-day">Среда</div>
+                                <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                                <div class="forecast-temp">-10° / -16°</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Окно 2: Прогноз на неделю -->
-            <div class="window">
-                <h2 class="window-title"><i class="fas fa-calendar-alt"></i> Прогноз на 5 дней</h2>
-                <div class="forecast-container">
-                    <div class="forecast-item">
-                        <div class="forecast-day">Сегодня</div>
-                        <div class="forecast-icon"><i class="fas fa-sun"></i></div>
-                        <div class="forecast-temp">24° / 18°</div>
-                    </div>
-                    <div class="forecast-item">
-                        <div class="forecast-day">Завтра</div>
-                        <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
-                        <div class="forecast-temp">22° / 16°</div>
-                    </div>
-                    <div class="forecast-item">
-                        <div class="forecast-day">Среда</div>
-                        <div class="forecast-icon"><i class="fas fa-cloud"></i></div>
-                        <div class="forecast-temp">20° / 15°</div>
-                    </div>
-                    <div class="forecast-item">
-                        <div class="forecast-day">Четверг</div>
-                        <div class="forecast-icon"><i class="fas fa-cloud-rain"></i></div>
-                        <div class="forecast-temp">18° / 13°</div>
-                    </div>
-                    <div class="forecast-item">
-                        <div class="forecast-day">Пятница</div>
-                        <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
-                        <div class="forecast-temp">21° / 15°</div>
-                    </div>
+                
+                <div class="image-upload">
+                    <p>Добавьте фото Усть-Илимска</p>
+                    <input type="file" id="ust-ilimsk-upload" accept="image/*" style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('ust-ilimsk-upload').click()">Выбрать изображение</button>
+                    <img id="ust-ilimsk-image" class="city-image" alt="Фото Усть-Илимска">
                 </div>
             </div>
             
-            <!-- Окно 3: Местоположение -->
+            <!-- Окно 2: Братск -->
             <div class="window">
-                <h2 class="window-title"><i class="fas fa-map-marker-alt"></i> Местоположение</h2>
-                <div class="location-info">
-                    <img src="https://images.unsplash.com/photo-1549144511-c3a4dacddbb2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Городской пейзаж" class="location-image">
-                    <div class="location-details">
-                        <div class="location-item">
-                            <span class="location-label">Город:</span>
-                            <span class="location-value">Москва</span>
+                <h2 class="window-title">
+                    <span class="city-name"><i class="fas fa-city"></i> Братск</span>
+                </h2>
+                <div class="weather-widget">
+                    <div id="bratsk-weather">
+                        <div class="current-weather">
+                            <div class="weather-icon">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="temperature">-12°C</div>
+                            <div class="weather-description">Облачно</div>
+                            <div class="weather-details">
+                                <div class="detail">
+                                    <div class="detail-value">75%</div>
+                                    <div class="detail-label">Влажность</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">10 км/ч</div>
+                                    <div class="detail-label">Ветер</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">748 мм</div>
+                                    <div class="detail-label">Давление</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="location-item">
-                            <span class="location-label">Страна:</span>
-                            <span class="location-value">Россия</span>
-                        </div>
-                        <div class="location-item">
-                            <span class="location-label">Часовой пояс:</span>
-                            <span class="location-value">МСК (UTC+3)</span>
-                        </div>
-                        <div class="location-item">
-                            <span class="location-label">Широта/Долгота:</span>
-                            <span class="location-value">55.7558° N, 37.6173° E</span>
-                        </div>
-                        <div class="location-item">
-                            <span class="location-label">Восход/Закат:</span>
-                            <span class="location-value">05:45 / 20:30</span>
+                        
+                        <div class="forecast-container">
+                            <div class="forecast-item">
+                                <div class="forecast-day">Завтра</div>
+                                <div class="forecast-icon"><i class="fas fa-cloud"></i></div>
+                                <div class="forecast-temp">-10° / -16°</div>
+                            </div>
+                            <div class="forecast-item">
+                                <div class="forecast-day">Среда</div>
+                                <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                                <div class="forecast-temp">-8° / -14°</div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                
+                <div class="image-upload">
+                    <p>Добавьте фото Братска</p>
+                    <input type="file" id="bratsk-upload" accept="image/*" style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('bratsk-upload').click()">Выбрать изображение</button>
+                    <img id="bratsk-image" class="city-image" alt="Фото Братска">
+                </div>
+            </div>
+            
+            <!-- Окно 3: Иркутск -->
+            <div class="window">
+                <h2 class="window-title">
+                    <span class="city-name"><i class="fas fa-city"></i> Иркутск</span>
+                </h2>
+                <div class="weather-widget">
+                    <div id="irkutsk-weather">
+                        <div class="current-weather">
+                            <div class="weather-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="temperature">-8°C</div>
+                            <div class="weather-description">Солнечно</div>
+                            <div class="weather-details">
+                                <div class="detail">
+                                    <div class="detail-value">65%</div>
+                                    <div class="detail-label">Влажность</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">8 км/ч</div>
+                                    <div class="detail-label">Ветер</div>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-value">750 мм</div>
+                                    <div class="detail-label">Давление</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="forecast-container">
+                            <div class="forecast-item">
+                                <div class="forecast-day">Завтра</div>
+                                <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+                                <div class="forecast-temp">-6° / -12°</div>
+                            </div>
+                            <div class="forecast-item">
+                                <div class="forecast-day">Среда</div>
+                                <div class="forecast-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="forecast-temp">-7° / -13°</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="image-upload">
+                    <p>Добавьте фото Иркутска</p>
+                    <input type="file" id="irkutsk-upload" accept="image/*" style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('irkutsk-upload').click()">Выбрать изображение</button>
+                    <img id="irkutsk-image" class="city-image" alt="Фото Иркутска">
                 </div>
             </div>
         </div>
         
-        <!-- Инструкции по настройке -->
-        <div class="instructions">
-            <h3>Как добавить свои изображения:</h3>
-            <ul>
-                <li>Замените URL в атрибуте <code>src</code> тега <code>&lt;img&gt;</code> в разделе "Местоположение" на путь к вашему изображению</li>
-                <li>Для лучшего отображения используйте изображения с соотношением сторон примерно 2:1 (например, 500x250 пикселей)</li>
-                <li>Вы также можете заменить иконки погоды, изменив классы Font Awesome (например, <code>fa-sun</code> на <code>fa-cloud</code>)</li>
-                <li>Чтобы изменить данные о погоде, просто отредактируйте соответствующие текстовые блоки в HTML-коде</li>
-            </ul>
-        </div>
+        <footer>
+            <p>Погодные данные обновляются автоматически. Добавьте свои фотографии городов с помощью кнопок выше.</p>
+        </footer>
     </div>
     
     <script>
-        // Простой скрипт для обновления времени
+        // Функция для загрузки и отображения изображений
+        function setupImageUpload(uploadId, imageId) {
+            const uploadInput = document.getElementById(uploadId);
+            const imageElement = document.getElementById(imageId);
+            
+            uploadInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imageElement.src = e.target.result;
+                        imageElement.style.display = 'block';
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Настройка загрузки изображений для каждого города
+        setupImageUpload('ust-ilimsk-upload', 'ust-ilimsk-image');
+        setupImageUpload('bratsk-upload', 'bratsk-image');
+        setupImageUpload('irkutsk-upload', 'irkutsk-image');
+        
+        // Обновление времени каждую секунду
         function updateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('ru-RU');
             document.getElementById('current-time').textContent = timeString;
         }
         
-        // Обновляем время каждую секунду
         setInterval(updateTime, 1000);
-        updateTime(); // Инициализация при загрузке
+        updateTime();
+        
+        // Имитация обновления погодных данных
+        function updateWeatherData() {
+            // В реальном приложении здесь был бы запрос к API погоды
+            console.log("Погодные данные обновлены");
+        }
+        
+        // Обновляем погоду каждые 10 минут
+        setInterval(updateWeatherData, 600000);
     </script>
 </body>
 </html>
